@@ -1,0 +1,7 @@
+DEBUG: True
+PORT: /dev/ttyUSB0
+#PORT: /dev/pts/3
+BAUD_RATE: 921600
+READEND: " OK"
+DELAY: 200
+

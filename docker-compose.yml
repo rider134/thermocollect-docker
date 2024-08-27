@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  flask:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile  # Adjust if your Dockerfile is named differently
+    expose:
+      - "8000"
+    volumes:
+      - thermocollect_data:/app
+    devices:
+      - "/dev/pts/6:/dev/ttyUSB0"  # Map the serial port device
+    environment:
+      - PYTHONUNBUFFERED=1
+      - FLASK_ENV=production  # Optional: set environment variables
+
+
+  angular:
+    build:
+      context: ./Spa # Path to your Angular project
+      dockerfile: Dockerfile  # Adjust if your Dockerfile is named differently
+    expose:
+      - "80"  # Expose Angular internally
+
+  nginx:
+    build:
+      context: ./Proxy
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"  # Expose Nginx on port 80
+    depends_on:
+      - angular
+      - flask
+
+volumes:
+  thermocollect_data:

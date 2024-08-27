@@ -1,0 +1,31 @@
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.navigation {
+    width: 200px;
+}
+
+.navBar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+}
+
+.footer{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 2;
+}
+
+.divcontainer{
+    display: flex;
+    height: calc(100% - 64px);
+    width: 100%;
+    margin-top: 64px;
+    position: fixed;
+}

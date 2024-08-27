@@ -1,0 +1,81 @@
+.control-card{
+    margin: 5px;
+    display: flex;
+    flex-flow: column wrap;
+    padding: 8px;
+}
+
+.log-card{
+    margin: 5px;
+    display: flex;
+    flex-flow: column wrap;
+    padding: 8px 0px;
+}
+
+.cmdInput{
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+}
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+}
+  
+.example-full-width {
+    width: 100%;
+}
+
+.slider {
+    margin: 20px 0px;
+    width: 100%;
+}
+
+.slider-container{
+    min-height: 60px;
+    width: 100%;
+}
+
+.store-button{
+    padding: 0;
+    text-align: center;
+    margin-left: 10px;
+    display: inline-block;
+}
+
+.example-viewport {
+    height: 200px;
+    border: 1px solid rgb(133, 133, 133);
+    border-radius: 2px;
+}
+
+.logItem{
+    display: flex;
+    align-items: center;
+}
+
+.select-field{
+    width: 100%;
+}
+
+.cmd-form{
+    padding: 5px;
+    width: 100%;
+}
+
+.sendButton{
+    width: fit-content;
+    padding: 0px 5px;
+}
+
+.selectModeButton{
+    flex-basis: 0;
+    flex-grow: 1;
+}
+
+.selectModeGroup{
+    display: flex;
+    flex-wrap: wrap;
+}

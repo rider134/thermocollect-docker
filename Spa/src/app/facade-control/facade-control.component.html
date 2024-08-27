@@ -1,0 +1,46 @@
+
+<mat-card class="control-card">
+    <select [(ngModel)]="facade">
+      <option *ngFor="let facade of facades" [ngValue]="facade">
+        {{facade.name}}
+      </option>
+    </select>
+  
+    <mat-button-toggle-group class="selectModeGroup" [(ngModel)] = "facadeMode" (change)="onModeChange($event.value)" matTooltip="Set Mode for Facade">
+      <mat-button-toggle class="selectModeButton" [value] = 0 >Geschlosssen</mat-button-toggle>
+      <mat-button-toggle class="selectModeButton" [value] = 1 >Wärmen</mat-button-toggle>
+      <mat-button-toggle class="selectModeButton" [value] = 2 >Kühlen</mat-button-toggle>
+      <mat-button-toggle class="selectModeButton" [value] = 3 >Manuell</mat-button-toggle>
+      <mat-button-toggle class="selectModeButton" [value] = 4 >Licht</mat-button-toggle>
+      <mat-button-toggle class="selectModeButton" [value] = 5 >Schatten</mat-button-toggle>
+      <mat-button-toggle class="selectModeButton" [value] = 6 >Zeitprogramm</mat-button-toggle>
+    </mat-button-toggle-group>
+     
+    <div class="slider-container">
+      <div style="padding: 0px 10px;">
+        <ly-slider [(ngModel)]="facadeAngle" class="slider"  [disabled]="disabled" [marks]="facadeAngle != this.facade.angle" [min]="min" [max]="max"> 
+          <ly-mark [value]="this.facade.angle">Previous Angle</ly-mark>
+        </ly-slider>
+      </div>
+    </div>
+
+    <button class="sendButton" mat-raised-button color="accent" (click)="updateFacade()"  [disabled]="!facade.facadeId">Speichern</button>
+    <ly-divider></ly-divider>
+    <div class="cmdInput">
+        <input #commandField [(ngModel)]='inputCommand' type="text" (keyup.enter)="sendCommand()">
+  
+      <button class="store-button" mat-raised-button color="accent" [disabled]="!inputCommand" (click)='sendCommand()'>Senden</button>
+    </div>
+    <ly-divider></ly-divider>
+
+</mat-card>
+
+<mat-card class="control-card" style="height: calc(100% - 320px);">
+    <ul #serialLogBox style="padding-left: 0px; overflow: hidden; overflow-y: scroll;">
+      <li *ngFor="let c of commands" class="logItem">
+       <app-serial-log-element [command]="c" style="width: 100%;">
+
+       </app-serial-log-element>
+      </li>
+    </ul>  
+</mat-card>
