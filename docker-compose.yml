@@ -5,12 +5,13 @@ services:
     build:
       context: ./Backend
       dockerfile: Dockerfile  # Adjust if your Dockerfile is named differently
+    privileged: true
     expose:
       - "8000"
     volumes:
-      - thermocollect_data:/app
+      - /dev/pts/5:/dev/ttyUSB0
     devices:
-      - "/dev/pts/6:/dev/ttyUSB0"  # Map the serial port device
+      - "/dev/pts/5:/dev/ttyUSB0"  # Map the serial port device
     environment:
       - PYTHONUNBUFFERED=1
       - FLASK_ENV=production  # Optional: set environment variables
@@ -33,5 +34,8 @@ services:
       - angular
       - flask
 
-volumes:
-  thermocollect_data:
+  udp-server:
+    build:
+      context: ./Udp
+      dockerfile: Dockerfile
+    network_mode: host

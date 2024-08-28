@@ -1,4 +1,3 @@
-from pickle import TRUE
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -120,7 +119,7 @@ def sendSerial(message, readUntilFlag = True):
 
             if(readUntilFlag):           
               ans = ser.readline()    
-              while(TRUE):
+              while(True):
                 line = ser.readline() 
                 if(read_End in str(line,'UTF8')):
                   ans += line

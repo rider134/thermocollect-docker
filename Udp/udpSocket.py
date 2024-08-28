@@ -1,6 +1,5 @@
 import socket
 import logging
-from pathlib import Path
 
 class CustomFormatter(logging.Formatter):
 
@@ -47,13 +46,7 @@ ch.setFormatter(CustomFormatter())
 
 log.addHandler(ch)
 
-log.debug("this will get printed")
-log.info("this will get printed")
-log.warning("this will get printed")
-log.error("this will get printed")
-log.critical("this will get printed")
 log.info("Udp Thread running")
-log.info(netifaces.interfaces())
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 server_socket.bind(('', 12000))
