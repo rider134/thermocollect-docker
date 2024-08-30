@@ -8,14 +8,14 @@ services:
     privileged: true
     expose:
       - "8000"
-    volumes:
-      - /dev/pts/5:/dev/ttyUSB0
+    # volumes:
+    #   - /dev/pts/6:/dev/ttyUSB0
     devices:
-      - "/dev/pts/5:/dev/ttyUSB0"  # Map the serial port device
+      - "/dev/ttyUSB0:/dev/ttyUSB0"  # Map the serial port device
     environment:
       - PYTHONUNBUFFERED=1
       - FLASK_ENV=production  # Optional: set environment variables
-
+    restart: unless-stopped
 
   angular:
     build:
@@ -23,6 +23,7 @@ services:
       dockerfile: Dockerfile  # Adjust if your Dockerfile is named differently
     expose:
       - "80"  # Expose Angular internally
+    restart: unless-stopped
 
   nginx:
     build:
@@ -33,9 +34,11 @@ services:
     depends_on:
       - angular
       - flask
+    restart: unless-stopped
 
   udp-server:
     build:
       context: ./Udp
       dockerfile: Dockerfile
     network_mode: host
+    restart: unless-stopped
