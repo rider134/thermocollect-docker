@@ -6,6 +6,8 @@ import serial
 import yaml
 import time
 from filelock import FileLock, Timeout
+import json
+import re
 
 def current_millis():
     return round(time.time() * 1000)
@@ -59,6 +61,23 @@ with app.app_context():
     print("Database initialization lock timeout")
 ####################################################################################
 
+def preprocess_json_string(json_str):
+    json_str = re.sub(r'(?<!")(\w+):', r'"\1":', json_str)
+    
+    return json_str
+
+def extract_message(data):
+    # Check if the data is a dictionary
+    if isinstance(data, dict):
+        return data.get('message', 'Default Message')
+    else:
+        # Convert data to a string and preprocess if needed
+        fixed_json_str = preprocess_json_string(data)
+        try:
+            data = json.loads(fixed_json_str)
+            return data.get('message', 'Default Message')
+        except json.JSONDecodeError:
+            return 'Error parsing JSON'
 
 @app.route('/api')
 def hello():
@@ -98,11 +117,13 @@ def getFacades():
 @app.route('/api/command', methods = ['PUT'])
 def sendCommand():
   json_data = request.get_json()
-  if not json_data or "message" not in json_data:
+  message = extract_message(json_data)
+  print(json_data)
+  if not json_data or 'message' not in json_data:
     return jsonify({'message': 'Invalid request or message'}), 400
- 
+  print(message)
   try:
-    msg = sendSerial(json_data["message"])
+    msg = sendSerial(message)
     return jsonify({"message" : msg}), 200
   except Exception as e:
     print(e)
